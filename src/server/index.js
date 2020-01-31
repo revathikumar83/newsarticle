@@ -18,28 +18,26 @@ app.use(express.static('dist'))
 console.log(__dirname)
 
 
-
 const textapi = new aylien({
     application_id: process.env.AppId,
-    application_key: process.env.APIkey,
+    application_key: process.env.APIkey
   });
+
+
   
 
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('dist/index.html'));
 })
 
-app.get('/test', function (req, res) {
-    res.json(mockAPIResponse)
-})
-app.post('/testing', async (req, res, next) => {
-    console.log(req.body);
+
+app.post('/api', async (req, res, next) => {
+
+    const { text } = req.body;
+    console.log(text);
     try {
-      var data = textapi.sentiment({
-        //'text': 'John is a very good football player!'
-        'text': req.body.text
-        
-      }, function(error, response) {
+       textapi.sentiment({text }, 
+        function(error, response) {
         if (error === null) {
           console.log(response);
           res.send(response);
@@ -56,4 +54,8 @@ app.post('/testing', async (req, res, next) => {
 // designates what port the app will listen to for incoming requests
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
+})
+
+app.get('/test', function (req, res) {
+    res.json(mockAPIResponse)
 })

@@ -2,24 +2,28 @@ function handleSubmit(event) {
     event.preventDefault()
 
     // check what text was put into the form field
-    let formText = document.getElementById('name').value
+    let text = document.getElementById('name').value
     
-    Client.checkForName(JSON.parse(JSON.stringify(formText[0].value)))
+    if (!text) return;
 
-    
+    console.log(text)
 
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:3000/testing',{
+    fetch('/api',{
         method: 'POST',
-        body: JSON.stringify({text: formText[0].value}),
+        mode: 'cors',
+        body: JSON.stringify({text}),
         headers: {"Content-Type": "application/json"}
     })
     .then(res => res.json())
     .then(function(data) {
-        document.getElementById('results').innerHTML = data.text
+        document.getElementById('results').innerHTML =  `${data.polarity}`//`Polarity:${data.polarity} <br>  Polarity Confidence: ${data.polarity_confidence} <br> subjectivity confidence:${data.subjectivity_confidence}`
         console.log(data);
-        alert(dataText);
+        
     })
+
 }
+
+
 
 export { handleSubmit }
