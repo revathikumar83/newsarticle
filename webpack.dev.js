@@ -13,22 +13,7 @@ module.exports = {
        libraryTarget: 'var',
        library:'Client'
    },
-   devServer: {
-    host: "localhost",
-    port: "3000",
-    proxy: [
-      {
-        context: ["/api"],
-        target: "http://localhost:3000"
-      }
-    ],
-    hot: true,
-    overlay: true,
-    headers: {
-      "Access-Control-Allow-Origin": "*"
-    },
-    historyApiFallback: true
-  },
+   
 
    module: {
     rules: [

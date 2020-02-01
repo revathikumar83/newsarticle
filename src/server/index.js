@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
@@ -6,21 +8,21 @@ const cors = require('cors');
 const aylien = require('aylien_textapi');
 const app = express()
 
-const dotenv = require('dotenv');
-dotenv.config();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
 
 app.use(express.static('dist'))
-console.log(__dirname)
+
 
 
 const textapi = new aylien({
     application_id: process.env.AppId,
-    application_key: process.env.APIkey
+    application_key: process.env.APIkey,
+    
   });
 
 
@@ -56,6 +58,3 @@ app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
 })
 
-app.get('/test', function (req, res) {
-    res.json(mockAPIResponse)
-})
