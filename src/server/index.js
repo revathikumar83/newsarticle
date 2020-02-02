@@ -21,7 +21,7 @@ app.use(express.static('dist'))
 
 const textapi = new aylien({
     application_id: process.env.AppId,
-    application_key: process.env.APIkey,
+    application_key: process.env.APIkey
     
   });
 
@@ -34,10 +34,11 @@ app.get('/', function (req, res) {
 
 
 app.post('/api', async (req, res, next) => {
-
     const { text } = req.body;
     console.log(text);
+    
     try {
+        console.log("Sending request to sentiment thing");
        textapi.sentiment({text }, 
         function(error, response) {
         if (error === null) {
@@ -48,13 +49,14 @@ app.post('/api', async (req, res, next) => {
       //res.send(mockAPIResponse)
     } catch(error) {
       // Passes errors into the handler
-      return next(error)
+      //return next(error)
+      console.log(error);
     }
     //res.send(returnVal);
   })
 
 // designates what port the app will listen to for incoming requests
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!')
+app.listen(8080, function () {
+    console.log('Example app listening on port 8080!')
 })
 

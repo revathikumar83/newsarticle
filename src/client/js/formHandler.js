@@ -10,7 +10,7 @@ function handleSubmit(event) {
         console.log(text)
 
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:3000/api',{
+    fetch('http://localhost:8080/api',{
         method: 'POST',
        
         body: JSON.stringify({text}),
@@ -18,10 +18,17 @@ function handleSubmit(event) {
     })
     .then(res => res.json())
     .then(function(data) {
-        document.getElementById('results').innerHTML =  `Polarity:${data.polarity} <br>  Polarity Confidence: ${data.polarity_confidence} <br> subjectivity confidence:${data.subjectivity_confidence}`
+        console.log("Updating the UI!");
+        
+        document.getElementById('text').innerHTML = `text: ${data.text} <br>`
+        document.getElementById('polarity').innerHTML = `polarity: ${data.polarity} <br>`
+        document.getElementById('polarity_confidence').innerHTML = `polarity_confidence: ${data.polarity_confidence} <br>`
+        document.getElementById('subjectivity').innerHTML = `subjectivity: ${data.subjectivity} <br>`
+        document.getElementById('subjectivity_confidence').innerHTML = `subjectivity_confidence: ${data.subjectivity_confidence}`
+
         console.log(data);
         
-    })
+    }).catch(err => console.log(err));
 
 }
 
